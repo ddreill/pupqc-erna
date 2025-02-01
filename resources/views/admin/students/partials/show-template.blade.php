@@ -168,11 +168,6 @@
                             <span class="card-label fw-bold text-gray-800">{{ __('Activity Logs') }}</span>
                             <span class="text-gray-400 mt-1 fw-semibold fs-7">as of {{ formatDatetime(now()) }}</span>
                         </h3>
-                        <div class="card-toolbar">
-                            @can('student_logs_access')
-                                <a href="#" class="btn btn-sm btn-light">{{ __('Show More') }}</a>
-                            @endcan
-                        </div>
                     </div>
                     <div class="card-body pt-5">
 

@@ -225,6 +225,146 @@
         function getToggleValues(dom) {
             return $(dom).is(":checked") ? 1 : 0;
         }
+
+        
+        toastr.options = {
+            "closeButton": false,
+            "debug": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toastr-bottom-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        function display_axios_error(error) {
+            Swal.fire({
+                html: "<b>" + ((error.code != undefined) ? error.code : 'Unknown Code') + "</b>: " + error.name +
+                    " ― " + error.message + "<br><br> Please try again later",
+                icon: 'error',
+                buttonsStyling: !1,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+            }).then(function(e) {
+                if (e.isConfirmed)
+                    location.reload();
+            });
+        }
+
+        function display_axios_success(message) {
+            Swal.fire({
+                text: message,
+                icon: 'success',
+                buttonsStyling: !1,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+            });
+        }
+
+        function display_modal_error(error_message) {
+            Swal.fire({
+                text: error_message,
+                icon: 'error',
+                buttonsStyling: !1,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+            });
+        }
+
+        function display_modal_error_reload(error_message) {
+            Swal.fire({
+                text: error_message,
+                icon: 'error',
+                buttonsStyling: !1,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+            }).then(function(e) {
+                if (e.isConfirmed)
+                    location.reload();
+            });
+        }
+
+        function display_toastr_info(info_message) {
+            toastr.info(info_message);
+        }
+
+        function display_toastr_success(info_message) {
+            toastr.success(info_message);
+        }
+
+        function display_toastr_warning(info_message) {
+            toastr.warning(info_message);
+        }
+
+
+        function trigger_btnIndicator(elementId, trigger) {
+            var submitBtn = document.getElementById(elementId);
+
+            if (trigger == "default") {
+                submitBtn.removeAttribute('data-kt-indicator');
+                submitBtn.disabled = !1;
+            } else if (trigger == "loading") {
+                submitBtn.setAttribute('data-kt-indicator', 'on');
+                submitBtn.disabled = !0;
+            }
+
+        }
+
+        function init_formValidation(formId, fields) {
+            return FormValidation.formValidation(document.getElementById(formId), {
+                fields: fields,
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: '.fv-row',
+                        eleInvalidClass: '',
+                        eleValidClass: '',
+                    }),
+                },
+            });
+        }
+
+        function init_modal(modalId) {
+            return new bootstrap.Modal(document.getElementById(modalId));
+        }
+
+        function init_bs_modal(modalId) {
+            return $('#' + modalId).modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+
+        function init_drawer(drawerId) {
+            return KTDrawer.getInstance(document.getElementById(drawerId))
+        }
+
+        function init_stepper(stepperId) {
+
+            return new KTStepper(document.getElementById(stepperId));
+
+        }
+
         //end::Helper Functions
     </script>
 @endpush

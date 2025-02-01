@@ -169,7 +169,7 @@
                             @can('student_create')
                                 <div class="d-flex justify-content-end">
                                     @include('partials.buttons.create', [
-                                        'createRoute' => url('student/profile/add'),
+                                        'createRoute' => route('students.create'),
                                         'resource' => convertToSnakeCase(__('cruds.student.title_singular')),
                                         'resourceDisplay' => __('cruds.student.title_singular'),
                                     ])

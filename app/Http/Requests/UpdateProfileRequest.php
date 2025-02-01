@@ -33,7 +33,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'avatar' => [File::types(['png', 'jpg', 'jpeg'])->max(2000)],
             'name'  => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . auth()->id() . ',id,deleted_at,NULL', new ValidDomain(strToArray(",", config('settings.allowed_domain')))],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . auth()->id() . ',id,deleted_at,NULL'],
         ];
     }
 }

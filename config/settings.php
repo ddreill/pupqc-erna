@@ -1,18 +1,14 @@
 <?php
 
 return [
-
-    'auto_assign_role_id' => '2',
-    'allowed_domain' => 'iskolarngbayan.pup.edu.ph',
     'SSO_STATUS' => [
-        'google' => 'on',
-        'azure' => 'on',
+        'google' => env('GOOGLE_SSO_ENABLED', 'off'),
+        'azure' => env('AZURE_SSO_ENABLED', 'off'),
     ],
     'SSO_NAME' => [
-        'google' => 'Google',
-        'azure' => 'PUP WebMail',
+        'google' => env('GOOGLE_SSO_NAME', 'GMail'),
+        'azure' => env('AZURE_SSO_NAME', 'Outlook'),
     ],
-
 
     # THEME SETTINGS
     'THEME_BOOTSTRAP' => [
@@ -42,6 +38,11 @@ return [
 
     # Theme Vendors
     'THEME_VENDORS' => [
+        'ph-cities' => [
+            'js' => [
+                'assets/plugins/custom/ph-cities/city.min.js',
+            ],
+        ],
         'datatables' => [
             'css' => [
                 'assets/plugins/custom/datatables/datatables.bundle.css',

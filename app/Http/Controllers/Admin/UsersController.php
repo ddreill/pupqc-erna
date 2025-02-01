@@ -188,14 +188,4 @@ class UsersController extends Controller
 
         return back();
     }
-    
-    public function updateConfig($configKey, Request $request)
-    {
-        $configService = new ConfigurationService();
-        $configService->updateConfigByKey($configKey, $request->input('value'));
-
-        session()->flash('message', __('global.action_prompt', ["attribute" => ($configKey == "panel.email_verified") ? "<b>Email Verification</b>" : "<b>Two-Factor Authentication</b>", "action" => sprintf('turned %s successfully', $request->input('value'))]));
-
-        return redirect()->route('users.index');
-    }
 }

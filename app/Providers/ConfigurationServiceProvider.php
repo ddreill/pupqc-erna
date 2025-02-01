@@ -23,10 +23,5 @@ class ConfigurationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (Schema::hasTable((new Configuration())->getTable())) {
-
-            $configurations = Configuration::pluck('value', 'key')->toArray();
-            Config::set($configurations);
-        }
     }
 }

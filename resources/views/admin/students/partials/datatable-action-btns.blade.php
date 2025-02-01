@@ -14,7 +14,7 @@
 
     @isset($editGate)
         @can($editGate)
-            <a href="{{ route('admin.student.edit', $row->stud_uuid) }}"
+            <a href="{{ route('students.edit', $row->stud_uuid) }}"
                 class="btn btn-icon btn-light-warning btn-active-warning btn-sm me-1" data-bs-toggle="tooltip"
                 data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="{{ __('global.edit') }}">
                 <span class="svg-icon">

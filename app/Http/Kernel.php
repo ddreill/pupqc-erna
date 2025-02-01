@@ -46,11 +46,6 @@ class Kernel extends HttpKernel
             // \App\Http\Middleware\SetNavigationBar::class,
             \App\Http\Middleware\ApprovalMiddleware::class,
             \App\Http\Middleware\UserLastSeen::class,
-        ],
-        'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+        ]
     ];
 }

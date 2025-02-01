@@ -1,7 +1,7 @@
-<x-default-layout title="Add Student" pageTitle="Add Student">
+<x-default-layout title="Edit Student" pageTitle="Edit Student">
 
     <x-slot:breadcrumbs>
-        {{ Breadcrumbs::render('students.create') }}
+        {{ Breadcrumbs::render('students.edit', $stud_profile->stud_uuid) }}
     </x-slot:breadcrumbs>
 
     <x-slot:content>
@@ -10,6 +10,8 @@
             <div id="kt_content_container" class="container-fluid">
 
                 <form class="form" action="#" id="kt_form_add_student_profile">
+                    <input type="text" hidden name="id" value="{{ $stud_profile->stud_id }}" />
+
                     <div class="d-flex flex-column flex-xl-row">
                         <div class="d-flex flex-column flex-lg-row-auto gap-7 gap-lg-10 w-100 w-xl-450px mb-10">
 
@@ -21,7 +23,8 @@
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="fv-row mb-7">
-                                        <input type="text" class="form-control " name="studentNo" />
+                                        <input type="text" class="form-control " name="studentNo"
+                                            value="{!! $stud_profile->stud_studentNo ? $stud_profile->stud_studentNo : '' !!}" />
                                         <div class="text-muted fs-7 mb-5 mt-2">This is required and recommended to be
                                             unique
                                         </div>
@@ -29,9 +32,9 @@
 
                                     <div class="fv-row">
                                         <label class="form-label">Course</label>
-                                        <select class="form-select " data-placeholder="Select a course"
-                                            data-control="select2" data-dropdown-parent="#kt_form_add_student_profile"
-                                            name="course">
+                                        <select class="form-select " data-control="select2"
+                                            data-placeholder="Select a course"
+                                            data-dropdown-parent="#kt_form_add_student_profile" name="course">
                                             <option></option>
                                             @foreach ($formData_course as $course)
                                                 <option value="{{ $course->cour_id }}">
@@ -99,12 +102,12 @@
 
                                     <div class="fv-row mb-7" style="display:none !important">
                                         <label class="form-label">Date Exited</label>
-                                        <input class="form-control " placeholder="" name="dateExited">
+                                        <input class="form-control " value="{!! $stud_profile->stud_dateExited ? date('m/d/Y', strtotime($stud_profile->stud_dateExited)) : '' !!}" name="dateExited">
                                     </div>
 
                                     <div class="fv-row" style="display:none !important">
-                                        <select class="form-select " data-control="select2" data-placeholder="Honor"
-                                            data-dropdown-parent="#kt_form_add_student_profile" data-allow-clear="true"
+                                        <select class="form-select " data-control="select2" data-allow-clear="true"
+                                            data-placeholder="Honor" data-dropdown-parent="#kt_form_add_student_profile"
                                             name="honor">
                                             <option></option>
                                             @foreach ($formData_honors as $honor)
@@ -113,13 +116,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-
-
                                 </div>
                             </div>
 
                             <div class="card card-flush py-4 bg-danger bg-opacity-15"
-                                id="kt_form_add_student_profile_honorableDissmissed" style="display:none !important">
+                                id="kt_form_add_student_profile_honorableDissmissed">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <h2 class="">Honorable Dismissal</h2>
@@ -129,7 +130,8 @@
                                     <div class="fv-row mb-7" style="display:none !important">
                                         <label class="form-label">Have granted an Honorable Dismissal?</label>
 
-                                        <select class="form-select " data-control="select2" data-placeholder="Yes or No"
+                                        <select class="form-select " data-control="select2"
+                                            data-placeholder="Yes or No"
                                             data-dropdown-parent="#kt_form_add_student_profile"
                                             name="isHonorableDismissed">
                                             <option></option>
@@ -150,18 +152,21 @@
 
                                     <div class="fv-row mb-7" style="display:none !important">
                                         <label class="form-label ">Date Issued</label>
-                                        <input class="form-control " value="" name="honorableDismissedDate">
+                                        <input class="form-control " value="{!! $stud_profile->stud_honorableDismissedDate
+                                            ? date('m/d/Y', strtotime($stud_profile->stud_honorableDismissedDate))
+                                            : '' !!}"
+                                            name="honorableDismissedDate">
                                     </div>
 
                                     <div class="fv-row" style="display:none !important">
                                         <label class="form-label ">School name and Address</label>
-                                        <input class="form-control " value="" name="honorableDismissedSchool">
+                                        <input class="form-control " value="{!! $stud_profile->stud_honorableDismissedSchool ? $stud_profile->stud_honorableDismissedSchool : '' !!}"
+                                            name="honorableDismissedSchool">
                                         <div class=" fs-7 mb-5 mt-2">The school where the document will be transferred
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="d-flex flex-column flex-lg-row-fluid ms-lg-15 gap-7 gap-lg-10">
@@ -224,14 +229,14 @@
                                                     <label class="required form-label">First name</label>
                                                     <input class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
-                                                        name="firstName">
+                                                        value="{!! $stud_profile->stud_firstName ? $stud_profile->stud_firstName : '' !!}" name="firstName">
                                                 </div>
 
                                                 <div class="col-md-6 fv-row">
                                                     <label class="form-label">Middle name</label>
                                                     <input class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
-                                                        name="middleName">
+                                                        value="{!! $stud_profile->stud_middleName ? $stud_profile->stud_middleName : '' !!}" name="middleName">
                                                 </div>
                                             </div>
 
@@ -241,7 +246,7 @@
                                                     <label class="required form-label">Last name</label>
                                                     <input class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
-                                                        name="lastName">
+                                                        value="{!! $stud_profile->stud_lastName ? $stud_profile->stud_lastName : '' !!}" name="lastName">
                                                 </div>
                                             </div>
 
@@ -254,7 +259,7 @@
                                                 <label class="form-label">Permanent Address</label>
                                                 <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
-                                                    name="addressLine">
+                                                    value="{!! $stud_profile->stud_addressLine ? $stud_profile->stud_addressLine : '' !!}" name="addressLine">
                                             </div>
 
                                             <div class="row mb-7">
@@ -294,13 +299,19 @@
                                                     <label class="form-label">Elementary School name</label>
                                                     <input class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
+                                                        @if ($stud_profile->stud_sPrimary) value="{!! $stud_profile->stud_sPrimary->extsch_name ? $stud_profile->stud_sPrimary->extsch_name : '' !!}" 
+                                                    @else 
+                                                    value="" @endif
                                                         name="es_name">
                                                 </div>
 
 
                                                 <div class="col-md-3 fv-row">
                                                     <label class="form-label">Year graduated</label>
-                                                    <input class="form-control " placeholder=""
+                                                    <input class="form-control "
+                                                        @if ($stud_profile->stud_sPrimary) value="{!! $stud_profile->stud_sPrimary->extsch_yearExit ? $stud_profile->stud_sPrimary->extsch_yearExit : '' !!}"
+                                                    @else 
+                                                    value="" @endif
                                                         name="es_yearGraduated">
                                                 </div>
                                             </div>
@@ -311,13 +322,19 @@
                                                     <label class="form-label">High School name</label>
                                                     <input class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
+                                                        @if ($stud_profile->stud_sSecondary) value=" {!! $stud_profile->stud_sSecondary->extsch_name ? $stud_profile->stud_sSecondary->extsch_name : '' !!}"
+                                                @else
+                                                value="" @endif
                                                         name="hs_name">
                                                 </div>
 
 
                                                 <div class="col-md-3 fv-row">
                                                     <label class="form-label">Year graduated</label>
-                                                    <input class="form-control " placeholder=""
+                                                    <input class="form-control "
+                                                        @if ($stud_profile->stud_sSecondary) value=" {!! $stud_profile->stud_sSecondary->extsch_yearExit ? $stud_profile->stud_sSecondary->extsch_yearExit : '' !!}"
+                                                @else
+                                                value="" @endif
                                                         name="hs_yearGraduated">
                                                 </div>
                                             </div>
@@ -334,21 +351,26 @@
                                         <div class="card-body pt-0"
                                             id="kt_form_add_student_profile_prev_college_table">
 
-                                            <div class="d-flex justify-content-between">
-
-                                                <div class="fv-row w-50">
-                                                    <input placeholder="School name" class="form-control "
-                                                        oninput="this.value = this.value.toUpperCase()"
-                                                        name="college[0][name]">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="fv-row">
+                                                        <input placeholder="School name and address"
+                                                            class="form-control "
+                                                            oninput="this.value = this.value.toUpperCase()"
+                                                            name="college[0][name]">
+                                                    </div>
                                                 </div>
 
 
-                                                <div class="fv-row">
-                                                    <input placeholder="Year Exited" class="form-control "
-                                                        name="college[0][yearExited]">
+                                                <div class="col-3">
+                                                    <div class="fv-row">
+                                                        <input placeholder="Year Exited" class="form-control "
+                                                            name="college[0][yearExited]">
+                                                    </div>
                                                 </div>
 
-                                                <div class="">
+
+                                                <div class="col-1">
                                                     <button kt_form_add_student_profile_prev_college_addBtn
                                                         type="button" class="btn btn-icon btn-dark btn-sm"><i
                                                             class="fas fa-plus"></i></button>
@@ -356,22 +378,26 @@
                                             </div>
 
                                             <div id="kt_form_add_student_profile_prev_college_template"
-                                                class="d-flex justify-content-between mt-7"
-                                                style="display: none !important">
+                                                class="row mt-5" style="display: none !important">
+                                                <div class="col-8">
 
-                                                <div class="fv-row w-50">
-                                                    <input placeholder="School name" data-name="college.name"
-                                                        oninput="this.value = this.value.toUpperCase()"
-                                                        class="form-control ">
+                                                    <div class="fv-row">
+                                                        <input placeholder="School name and address"
+                                                            data-name="college.name"
+                                                            oninput="this.value = this.value.toUpperCase()"
+                                                            class="form-control ">
+                                                    </div>
                                                 </div>
 
+                                                <div class="col-3">
 
-                                                <div class="fv-row">
-                                                    <input placeholder="Year Exited" data-name="college.yearExited"
-                                                        class="form-control ">
+                                                    <div class="fv-row">
+                                                        <input placeholder="Year Exited"
+                                                            data-name="college.yearExited" class="form-control ">
+                                                    </div>
                                                 </div>
 
-                                                <div>
+                                                <div class="col-1">
                                                     <button kt_form_add_student_profile_prev_college_removeBtn
                                                         type="button" class="btn btn-icon btn-secondary btn-sm"><i
                                                             class="fas fa-minus"></i></button>
@@ -420,7 +446,6 @@
                                         </div>
 
                                         <div class="card-body px-0 py-10">
-
                                             <div class="tab-content" id="myTabContent">
                                                 <div class="tab-pane fade active show"
                                                     id="kt_student_view_school_primary" role="tabpanel">
@@ -516,6 +541,7 @@
                                                     </div>
 
                                                 </div>
+
 
                                                 <div class="tab-pane fade" id="kt_student_view_school_secondary"
                                                     role="tabpanel">
@@ -859,18 +885,12 @@
                                 <a href="{{ url('/student/profile') }}" class="btn btn-light me-5">Cancel</a>
                                 <button type="button" id="kt_form_add_student_profile_save_view"
                                     class="btn btn-primary me-2">
-                                    <span class="indicator-label">Save and View</span>
-                                    <span class="indicator-progress">Please wait...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                </button>
-                                <button type="button" id="kt_form_add_student_profile_save_add_more"
-                                    class="btn btn-primary me-2">
-                                    <span class="indicator-label">Save and Add more</span>
+                                    <span class="indicator-label">Save Changes and View</span>
                                     <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                                 <button type="button" id="kt_form_add_student_profile_save" class="btn btn-success">
-                                    <span class="indicator-label"><i class="fas fa-save me-1"></i> Save</span>
+                                    <span class="indicator-label"><i class="fas fa-save me-1"></i> Save Changes</span>
                                     <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
@@ -894,7 +914,6 @@
                             notEmpty: {
                                 message: 'Record type is required'
                             },
-
                         },
                     },
                     'studentNo': {
@@ -905,6 +924,9 @@
                             remote: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data: {
+                                    studentId: "{{ $stud_profile->stud_id }}"
                                 },
                                 message: 'Student number is already in use',
                                 method: 'POST',
@@ -957,8 +979,7 @@
                     'dateExited': {
                         validators: {
                             notEmpty: {
-                                enabled: false,
-                                message: 'Date graduated is required',
+                                message: 'Date is required',
                             },
                             date: {
                                 format: 'MM/DD/YYYY',
@@ -1020,7 +1041,6 @@
                     },
                 });
 
-
                 const collegeNameValidators = {
                     validators: {
                         notEmpty: {
@@ -1068,38 +1088,38 @@
                 }
 
                 const showAcadStatusData = function(acadStatus) {
+
+                    // Academic Status
                     const dateExitedElem = $("#kt_form_add_student_profile [name='dateExited']").parent();
                     const honorElem = $("#kt_form_add_student_profile [name='honor']").parent();
 
+                    /// Reset Academic Status Form
+                    fv.disableValidator("dateExited");
+
+                    // Envelope Documents
                     const exitDocList = $("#kt_form_add_student_profile_document_exit_list");
                     const exitDocNA = $("#kt_form_add_student_profile_document_exit_na");
 
-                    $(dateExitedElem).find("label.form-label").text('Date Exited');
+                    /// Reset visibility of Envelop Documents - Exit
                     $(exitDocList).attr("style", "display: none !important");
                     $(exitDocNA).attr("style", "");
-                    fv.disableValidator("dateExited");
 
 
-                    if (acadStatus == "DIS") {
-
-                        fv.enableValidator("dateExited");
-
-                        $(exitDocList).attr("style", "");
-                        $(exitDocNA).attr("style", "display: none !important");
-
-                        $(dateExitedElem).attr("style", "");
-                    } else if (acadStatus == "GRD") {
+                    /// Academic Status
+                    if (acadStatus == "GRD") {
 
                         fv.enableValidator("dateExited");
 
                         $(exitDocList).attr("style", "");
                         $(exitDocNA).attr("style", "display: none !important");
-
 
                         $(dateExitedElem).attr("style", "");
                         $(honorElem).attr("style", "");
+                    } else if (acadStatus == "DIS") {
 
-                        $(dateExitedElem).find("label.form-label").text('Date Graduated');
+                        $(exitDocList).attr("style", "");
+                        $(exitDocNA).attr("style", "display: none !important");
+
                     }
                 }
 
@@ -1202,7 +1222,6 @@
 
                     }
                 }
-
                 const resetFormData = function() {
 
                     $('#kt_form_add_student_profile select.form-select').val('').trigger(
@@ -1232,7 +1251,7 @@
                             trigger_btnIndicator(add_submitBtnId, "loading");
                             axios({
                                 method: "POST",
-                                url: "{{ url('/student/profile/add') }}",
+                                url: "{{ url('/student/profile/edit') }}",
                                 data: retrieveFormData(),
                                 timeout: "{{ $axios_timeout }}"
                             }).then(function(respond) {
@@ -1248,59 +1267,18 @@
                                     }, 1500);
                                 } else {
 
-                                    display_modal_error("{{ __('modal.error') }}");
+                                    display_modal_error(
+                                        "{{ __('modal.error') }}");
                                 }
 
                                 resetFormData();
 
                             }).catch(function(error) {
 
-                                display_modal_error(error);
+                                display_axios_error(error);
                             });
                         } else {
-                            display_modal_error("{{ __('modal.error') }}");
-                        }
-                    });
-                });
-
-                $("#kt_form_add_student_profile_save_add_more").on("click", function() {
-
-                    const add_submitBtnId = "kt_form_add_student_profile_save_add_more";
-
-                    fv.validate().then(function(e) {
-
-                        if ('Valid' == e) {
-
-                            trigger_btnIndicator(add_submitBtnId, "loading");
-                            axios({
-                                method: "POST",
-                                url: "{{ url('/student/profile/add') }}",
-                                data: retrieveFormData(),
-                                timeout: "{{ $axios_timeout }}"
-                            }).then(function(respond) {
-
-                                trigger_btnIndicator(add_submitBtnId, "default");
-                                if (respond.status == 200) {
-
-                                    display_axios_success(respond.data.message);
-
-                                    setInterval(() => {
-                                        window.location =
-                                            "{{ url('/student/profile/add') }}";
-                                    }, 1500);
-                                } else {
-
-                                    display_modal_error("{{ __('modal.error') }}");
-                                }
-
-                                resetFormData();
-
-                            }).catch(function(error) {
-
-                                display_modal_error(error);
-                            });
-                        } else {
-                            display_modal_error("{{ __('modal.error') }}");
+                            display_modal_error("{{ __('modal.error_validation') }}");
                         }
                     });
                 });
@@ -1316,7 +1294,7 @@
                             trigger_btnIndicator(add_submitBtnId, "loading");
                             axios({
                                 method: "POST",
-                                url: "{{ url('/student/profile/add') }}",
+                                url: "{{ url('/student/profile/edit') }}",
                                 data: retrieveFormData(),
                                 timeout: "{{ $axios_timeout }}"
                             }).then(function(respond) {
@@ -1333,22 +1311,26 @@
                                     }, 1500);
                                 } else {
 
-                                    display_modal_error("{{ __('modal.error') }}");
+                                    display_modal_error(
+                                        "{{ __('modal.error') }}");
                                 }
 
                                 resetFormData();
 
                             }).catch(function(error) {
 
-                                display_modal_error(error);
+                                display_axios_error(error);
                             });
                         } else {
-                            display_modal_error("{{ __('modal.error') }}");
+                            display_modal_error("{{ __('modal.error_validation') }}");
                         }
                     });
                 });
 
                 // Initialize Form fields
+
+                const collegeTemplate = $("#kt_form_add_student_profile_prev_college_template");
+                let rowIndex = 0;
 
                 const removeCollege = function(rowIndex) {
 
@@ -1359,48 +1341,127 @@
                         'div[data-row-index="' + rowIndex + '"]').remove();
                 }
 
-                const template = $("#kt_form_add_student_profile_prev_college_template");
-                let rowIndex = 0;
+                const createCollegeRow = function(rowIndex, value) {
 
-                $("#kt_form_add_student_profile button[kt_form_add_student_profile_prev_college_addBtn]").on(
-                    "click",
-                    function() {
+                    const clone = collegeTemplate.clone(true);
+                    clone.removeAttr("id");
 
-                        rowIndex++;
+                    clone.attr("style", "");
+                    clone.attr("data-row-index", rowIndex);
 
-                        const clone = template.clone(true);
-                        clone.removeAttr("id");
+                    clone.insertBefore(collegeTemplate);
 
-                        clone.attr("style", "");
-                        clone.attr("data-row-index", rowIndex);
+                    $(clone).find('[data-name="college.name"]').attr("name", "college[" + rowIndex +
+                        "][name]");
+                    $(clone).find('[data-name="college.yearExited"]').attr("name", "college[" +
+                        rowIndex + "][yearExited]");
 
-                        clone.insertBefore(template);
+                    if (value) {
 
-                        $(clone).find('[data-name="college.name"]').attr("name", "college[" + rowIndex +
-                            "][name]");
-                        $(clone).find('[data-name="college.yearExited"]').attr("name", "college[" +
-                            rowIndex + "][yearExited]");
+                        $(clone).find('[data-name="college.name"]').val(value.extsch_name);
+                        $(clone).find('[data-name="college.yearExited"]').val(value.extsch_yearExit);
+                    }
 
-                        fv.addField("college[" + rowIndex + "][name]", collegeNameValidators)
-                            .addField("college[" + rowIndex + "][yearExited]",
-                                collegeYearExitedValidators);
+                    fv.addField("college[" + rowIndex + "][name]", collegeNameValidators)
+                        .addField("college[" + rowIndex + "][yearExited]",
+                            collegeYearExitedValidators);
+
+                    const removeBtn = clone.find(
+                        'button[kt_form_add_student_profile_prev_college_removeBtn]');
+                    removeBtn.attr('data-row-index', rowIndex);
+
+                    $(removeBtn).on('click', function(e) {
+
+                        const index = $(this).attr('data-row-index');
+                        removeCollege(index);
+                    })
+
+                }
+
+                $("#kt_form_add_student_profile button[kt_form_add_student_profile_prev_college_addBtn]")
+                    .on(
+                        "click",
+                        function() {
+
+                            rowIndex++;
+
+                            const clone = collegeTemplate.clone(true);
+                            clone.removeAttr("id");
+
+                            clone.attr("style", "");
+                            clone.attr("data-row-index", rowIndex);
+
+                            clone.insertBefore(collegeTemplate);
+
+                            $(clone).find('[data-name="college.name"]').attr("name", "college[" + rowIndex +
+                                "][name]");
+                            $(clone).find('[data-name="college.yearExited"]').attr("name", "college[" +
+                                rowIndex + "][yearExited]");
+
+                            fv.addField("college[" + rowIndex + "][name]", collegeNameValidators)
+                                .addField("college[" + rowIndex + "][yearExited]",
+                                    collegeYearExitedValidators);
+
+                            const removeBtn = clone.find(
+                                'button[kt_form_add_student_profile_prev_college_removeBtn]');
+                            removeBtn.attr('data-row-index', rowIndex);
+
+                            $(removeBtn).on('click', function(e) {
+
+                                const index = $(this).attr('data-row-index');
+                                removeCollege(index);
+                            })
+
+                            Inputmask({
+                                "mask": "9999"
+                            }).mask("#kt_form_add_student_profile [name='college[" + rowIndex +
+                                "][yearExited]']");
+                        });
 
 
-                        const removeBtn = clone.find(
-                            'button[kt_form_add_student_profile_prev_college_removeBtn]');
-                        removeBtn.attr('data-row-index', rowIndex);
 
-                        $(removeBtn).on('click', function(e) {
 
-                            const index = $(this).attr('data-row-index');
-                            removeCollege(index);
-                        })
+                @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')
 
-                        Inputmask({
-                            "mask": "9999"
-                        }).mask("#kt_form_add_student_profile [name='college[" + rowIndex +
-                            "][yearExited]']");
+                    axios({
+                        method: "POST",
+                        url: "{{ url('/student/profile/retrieve-prev-college') }}",
+                        data: {
+                            id: "{{ $stud_profile->stud_id_md5 }}"
+                        },
+                        timeout: "{{ $axios_timeout }}"
+                    }).then(function(respond) {
+
+                        if (respond.status == 200) {
+
+                            let pc = respond.data;
+
+                            if (pc.length >= 1) {
+
+                                $(formElement).find("[name='college[0][name]']").val(pc[0]['extsch_name']);
+                                $(formElement).find("[name='college[0][yearExited]']").val(pc[0][
+                                    'extsch_yearExit'
+                                ]);
+
+                                pc.shift();
+                                pc.forEach(e => {
+
+                                    rowIndex++;
+                                    createCollegeRow(rowIndex, e);
+                                });
+
+                            }
+
+                        } else {
+
+                            display_modal_error("{{ __('modal.error') }}");
+                        }
+
+                    }).catch(function(error) {
+
+                        display_axios_error(error);
                     });
+                @endif
 
                 var city = new City();
 
@@ -1416,7 +1477,8 @@
 
                         $("#kt_form_add_student_profile [name='addressCity']").empty();
 
-                        c.getCities($("#kt_form_add_student_profile [name='addressProvince']").val())
+                        c.getCities($("#kt_form_add_student_profile [name='addressProvince']")
+                                .val())
                             .forEach((e) => {
                                 $(`<option value="${e}">${e.toUpperCase()}</option>`).appendTo(
                                     "#kt_form_add_student_profile [name='addressCity']");
@@ -1471,7 +1533,6 @@
                     "mask": "9999"
                 }).mask("#kt_form_add_student_profile [name='es_yearGraduated']");
 
-
                 // Documents
                 let ent_rowIndex = 0;
                 let rec_rowIndex = 0;
@@ -1486,69 +1547,142 @@
                 const initDocumentRow = function(rowIndex, docuCategory) {
 
                     $("#kt_form_add_student_profile_document_" + docuCategory +
-                        "_list [name='documents[" + docuCategory + "][" + rowIndex + "][docu]']").select2();
+                            "_list [name='documents[" + docuCategory + "][" + rowIndex + "][docu]']")
+                        .select2();
 
                     $("#kt_form_add_student_profile_document_" + docuCategory +
-                        "_list [name='documents[" + docuCategory + "][" + rowIndex + "][type]']").select2();
+                            "_list [name='documents[" + docuCategory + "][" + rowIndex + "][type]']")
+                        .select2();
 
                     Inputmask({
                         "mask": "99/99/9999"
                     }).mask("#kt_form_add_student_profile_document_" + docuCategory +
-                        "_list [name='documents[" + docuCategory + "][" + rowIndex + "][date_submitted]']");
-
+                        "_list [name='documents[" + docuCategory + "][" + rowIndex +
+                        "][date_submitted]']");
 
                     $("#kt_form_add_student_profile_document_" + docuCategory +
-                        "_list [name='documents[" + docuCategory + "][" + rowIndex + "][docu]']").on(
-                        "change",
-                        function() {
+                            "_list [name='documents[" + docuCategory + "][" + rowIndex + "][docu]']")
+                        .on(
+                            "change",
+                            function() {
 
-                            const docuTypesElement = $(
-                                "#kt_form_add_student_profile_document_" + docuCategory +
-                                "_list [name='documents[" + docuCategory + "][" + rowIndex + "][type]"
-                            );
+                                const docuTypesElement = $(
+                                    "#kt_form_add_student_profile_document_" + docuCategory +
+                                    "_list [name='documents[" + docuCategory + "][" + rowIndex +
+                                    "][type]"
+                                );
 
-                            id = $(this).val();
+                                id = $(this).val();
+                                type = $(docuTypesElement).val();
 
-                            $(docuTypesElement).empty().append("<option></option>");
+                                if (type) {
+                                    $(docuTypesElement).empty().append(
+                                        '<option></option><option value="' +
+                                        type + '">' + type + '</option>');
+                                } else {
+                                    $(docuTypesElement).empty().append('<option></option>');
+                                }
 
-                            if (id || id != "") {
-                                axios({
-                                    method: "POST",
-                                    url: "{{ url('/documents/document-types') }}",
-                                    data: {
-                                        id
-                                    },
-                                    timeout: "{{ $axios_timeout }}"
-                                }).then(function(respond) {
 
-                                    if (respond.status == 200) {
+                                if (id || id != "") {
+                                    axios({
+                                        method: "POST",
+                                        url: "{{ url('/documents/document-types') }}",
+                                        data: {
+                                            id
+                                        },
+                                        timeout: "{{ $axios_timeout }}"
+                                    }).then(function(respond) {
 
-                                        let docuTypes = respond.data;
+                                        if (respond.status == 200) {
 
-                                        docuTypes.forEach(type => {
+                                            let docuTypes = respond.data;
 
-                                            $(docuTypesElement).append('<option value="' +
-                                                type
-                                                .docuType_name + '">' + type
-                                                .docuType_name +
-                                                '</option>');
-                                        });
-                                    } else {
+                                            docuTypes.forEach(type => {
 
-                                        display_modal_error("{{ __('modal.error') }}");
-                                    }
+                                                $(docuTypesElement).append(
+                                                    '<option value="' +
+                                                    type
+                                                    .docuType_name + '">' + type
+                                                    .docuType_name +
+                                                    '</option>');
+                                            });
+                                        } else {
 
-                                }).catch(function(error) {
+                                            display_modal_error("{{ __('modal.error') }}");
+                                        }
 
-                                    display_modal_error(error);
-                                });
-                            }
-                        });
+                                    }).catch(function(error) {
+
+                                        display_axios_error(error);
+                                    });
+                                }
+                            });
                 }
 
-                initDocumentRow(ent_rowIndex, "entrance");
-                initDocumentRow(rec_rowIndex, "records");
-                initDocumentRow(ext_rowIndex, "exit");
+                const createDocumentRow = function(rowIndex, docuCategory, value) {
+
+                    const template = $("#kt_form_add_student_profile_document_" + docuCategory +
+                        "_template");
+                    const clone = template.clone(true);
+                    clone.removeAttr("id");
+
+                    clone.attr("style", "");
+                    clone.attr("data-row-index", rowIndex);
+
+                    clone.insertBefore(template);
+
+                    $(clone).find('[data-name="documents.docu"]').attr("name", "documents[" +
+                        docuCategory +
+                        "][" +
+                        rowIndex +
+                        "][docu]");
+                    $(clone).find('[data-name="documents.type"]').attr("name", "documents[" +
+                        docuCategory +
+                        "][" +
+                        rowIndex + "][type]");
+                    $(clone).find('[data-name="documents.date_submitted"]').attr("name",
+                        "documents[" + docuCategory + "][" +
+                        rowIndex + "][date_submitted]");
+
+
+                    if (value.subm_document) {
+
+                        $(clone).find('[data-name="documents.docu"]')
+                            .append(
+                                '<option value="' + value
+                                .subm_document + '" selected="selected">' + value.docu_name +
+                                '</option>');
+                    }
+
+                    if (value.subm_documentType) {
+
+                        $(clone).find('[data-name="documents.type"]')
+                            .append(
+                                '<option value="' + value.subm_documentType + '" selected="selected">' +
+                                value.subm_documentType + ' </option>');
+                    }
+
+                    if (value.subm_dateSubmitted) {
+                        console.log(value.date_submitted);
+
+                        $(clone).find('[data-name="documents.date_submitted"]')
+                            .val(moment(value.subm_dateSubmitted).format('L'));
+                    }
+
+                    const removeBtn = clone.find(
+                        'button[kt_form_add_student_profile_document_' + docuCategory +
+                        '_removeBtn]');
+                    removeBtn.attr('data-row-index', rowIndex);
+
+                    $(removeBtn).on('click', function(e) {
+
+                        const index = $(this).attr('data-row-index');
+                        removeDocumentRow(index, docuCategory);
+                    });
+
+                    initDocumentRow(rowIndex, docuCategory);
+                }
 
                 $("#kt_form_add_student_profile_document_entrance_list button[kt_form_add_student_profile_document_entrance_addBtn]")
                     .on(
@@ -1566,10 +1700,12 @@
 
                             clone.insertBefore(template);
 
-                            $(clone).find('[data-name="documents.docu"]').attr("name", "documents[entrance][" +
+                            $(clone).find('[data-name="documents.docu"]').attr("name",
+                                "documents[entrance][" +
                                 ent_rowIndex +
                                 "][docu]");
-                            $(clone).find('[data-name="documents.type"]').attr("name", "documents[entrance][" +
+                            $(clone).find('[data-name="documents.type"]').attr("name",
+                                "documents[entrance][" +
                                 ent_rowIndex + "][type]");
                             $(clone).find('[data-name="documents.date_submitted"]').attr("name",
                                 "documents[entrance][" +
@@ -1604,10 +1740,12 @@
 
                             clone.insertBefore(template);
 
-                            $(clone).find('[data-name="documents.docu"]').attr("name", "documents[records][" +
+                            $(clone).find('[data-name="documents.docu"]').attr("name",
+                                "documents[records][" +
                                 rec_rowIndex +
                                 "][docu]");
-                            $(clone).find('[data-name="documents.type"]').attr("name", "documents[records][" +
+                            $(clone).find('[data-name="documents.type"]').attr("name",
+                                "documents[records][" +
                                 rec_rowIndex + "][type]");
                             $(clone).find('[data-name="documents.date_submitted"]').attr("name",
                                 "documents[records][" +
@@ -1670,8 +1808,9 @@
 
                 const removeDocumentFixRow = function(rowIndex, docuCategory, fixDocu) {
 
-                    $("#kt_form_add_student_profile_document_" + docuCategory + "_" + fixDocu + "_list").find(
-                        'div[data-row-index="' + rowIndex + '"]').remove();
+                    $("#kt_form_add_student_profile_document_" + docuCategory + "_" + fixDocu + "_list")
+                        .find(
+                            'div[data-row-index="' + rowIndex + '"]').remove();
                 }
 
                 const initDocumentFixRow = function(rowIndex, docuCategory, fixDocu) {
@@ -1681,16 +1820,20 @@
                         if (fixDocu == "regcert") {
 
                             $("#kt_form_add_student_profile_document_" + docuCategory + "_" + fixDocu +
-                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu + "][" +
+                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu +
+                                "][" +
                                 rowIndex +
                                 "][sy]']").select2();
 
                             $("#kt_form_add_student_profile_document_" + docuCategory + "_" + fixDocu +
-                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu + "][" +
+                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu +
+                                "][" +
                                 rowIndex +
                                 "][sem]']").select2();
+
                             $("#kt_form_add_student_profile_document_" + docuCategory + "_" + fixDocu +
-                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu + "][" +
+                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu +
+                                "][" +
                                 rowIndex +
                                 "][yrlvl]']").select2();
 
@@ -1698,18 +1841,108 @@
                                 "mask": "99/99/9999"
                             }).mask("#kt_form_add_student_profile_document_" + docuCategory + "_" +
                                 fixDocu +
-                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu + "][" +
+                                "_list [name='documents_fix[" + docuCategory + "][" + fixDocu +
+                                "][" +
                                 rowIndex +
                                 "][date_submitted]']");
                         }
                     }
                 }
 
-                initDocumentFixRow(f_rec_rowIndex, "records", "regcert")
+                const createDocumentFixRow = function(rowIndex, docuCategory, fixDocu, value) {
+
+                    const template = $("#kt_form_add_student_profile_document_" + docuCategory + "_" +
+                        fixDocu +
+                        "_template");
+                    const clone = template.clone(true);
+                    clone.removeAttr("id");
+
+                    clone.attr("style", "");
+                    clone.attr("data-row-index", rowIndex);
+
+                    clone.insertBefore(template);
+
+                    if (docuCategory == "records") {
+
+                        if (fixDocu == "regcert") {
+
+                            $(clone).find('[data-name="documents_fix.sy"]').attr("name",
+                                "documents_fix[" +
+                                docuCategory +
+                                "][" + fixDocu + "][" +
+                                rowIndex +
+                                "][sy]");
+                            $(clone).find('[data-name="documents_fix.sem"]').attr("name",
+                                "documents_fix[" +
+                                docuCategory +
+                                "][" + fixDocu + "][" +
+                                rowIndex + "][sem]");
+                            $(clone).find('[data-name="documents_fix.yrlvl"]').attr("name",
+                                "documents_fix[" +
+                                docuCategory +
+                                "][" + fixDocu + "][" +
+                                rowIndex + "][yrlvl]");
+                            $(clone).find('[data-name="documents_fix.date_submitted"]').attr("name",
+                                "documents_fix[" + docuCategory + "][" + fixDocu + "][" +
+                                rowIndex + "][date_submitted]");
 
 
-                // ---- RECORDS
-                // --- REGISTRATION CERTIFICATES
+                            if (value.subm_documentType) {
+
+                                $(clone).find("[data-name='documents_fix.sy']")
+                                    .append(
+                                        '<option value="' + value.subm_documentType +
+                                        '" selected="selected">' +
+                                        value.subm_documentType + ' - ' + (
+                                            parseInt(value.subm_documentType) + 1) + ' </option>'
+                                    );
+                            }
+
+                            if (value.subm_documentType_1) {
+                                $(clone).find("[data-name='documents_fix.sem']")
+                                    .append(
+                                        '<option value="' + value
+                                        .subm_documentType_1 +
+                                        '" selected="selected">' + value
+                                        .subm_documentType_1 +
+                                        ' </option>');
+                            }
+
+                            if (value.subm_documentType_2) {
+                                $(clone).find("[data-name='documents_fix.yrlvl']")
+                                    .append(
+                                        '<option value="' + value
+                                        .subm_documentType_2 +
+                                        '" selected="selected">' + value
+                                        .subm_documentType_2 +
+                                        ' </option>');
+                            }
+
+                            if (value.subm_dateSubmitted) {
+                                $(clone).find(
+                                        "data-[name='documents_fix.date_submitted']")
+                                    .val(moment(value.subm_dateSubmitted).format('L'));
+                            }
+                        }
+                    }
+
+                    const removeBtn = clone.find(
+                        'button[kt_form_add_student_profile_document_' + docuCategory + "_" +
+                        fixDocu +
+                        '_removeBtn]');
+                    removeBtn.attr('data-row-index', rowIndex);
+
+                    $(removeBtn).on('click', function(e) {
+
+                        const index = $(this).attr('data-row-index');
+                        removeDocumentFixRow(index, docuCategory, fixDocu);
+                    });
+
+                    initDocumentFixRow(rowIndex, docuCategory, fixDocu);
+                }
+
+                // Records
+                // Registration Certificates
                 $("#kt_form_add_student_profile_document_records_regcert_list button[kt_form_add_student_profile_document_records_regcert_addBtn]")
                     .on(
                         "click",
@@ -1717,7 +1950,8 @@
 
                             f_rec_rowIndex++;
 
-                            const template = $("#kt_form_add_student_profile_document_records_regcert_template");
+                            const template = $(
+                                "#kt_form_add_student_profile_document_records_regcert_template");
                             const clone = template.clone(true);
                             clone.removeAttr("id");
 
@@ -1733,15 +1967,16 @@
                             $(clone).find('[data-name="documents_fix.sem"]').attr("name",
                                 "documents_fix[records][regcert][" +
                                 f_rec_rowIndex + "][sem]");
-                            $(clone).find('[data-name="documents_fix.date_submitted"]').attr("name",
-                                "documents_fix[records][regcert][" +
-                                f_rec_rowIndex + "][date_submitted]");
                             $(clone).find('[data-name="documents_fix.yrlvl"]').attr("name",
                                 "documents_fix[records][regcert][" +
                                 f_rec_rowIndex + "][yrlvl]");
+                            $(clone).find('[data-name="documents_fix.date_submitted"]').attr("name",
+                                "documents_fix[records][regcert][" +
+                                f_rec_rowIndex + "][date_submitted]");
 
                             const removeBtn = clone.find(
-                                'button[kt_form_add_student_profile_document_records_regcert_removeBtn]');
+                                'button[kt_form_add_student_profile_document_records_regcert_removeBtn]'
+                            );
                             removeBtn.attr('data-row-index', f_rec_rowIndex);
 
                             $(removeBtn).on('click', function(e) {
@@ -1752,6 +1987,235 @@
 
                             initDocumentFixRow(f_rec_rowIndex, "records", "regcert");
                         });
+
+
+
+                // Fill
+                const formElement = $("#kt_form_add_student_profile");
+                $(formElement).find("[name='course']").val("{!! $stud_profile->cour_stud_id ? $stud_profile->cour_stud_id : '' !!}").trigger("change");
+                $(formElement).find("[name='admissionType']").val("{!! $stud_profile->stud_admissionType ? $stud_profile->stud_admissionType : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='yearOfAdmission']").val("{!! $stud_profile->stud_yearOfAdmission ? $stud_profile->stud_yearOfAdmission : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='academicStatus']").val("{!! $stud_profile->stud_academicStatus ? $stud_profile->stud_academicStatus : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='honor']").val("{!! $stud_profile->stud_honor ? $stud_profile->stud_honor : '' !!}").trigger("change");
+
+                $(formElement).find("[name='recordType']").val("{!! $stud_profile->stud_recordType ? $stud_profile->stud_recordType : '' !!}").trigger(
+                    "change");
+
+                $(formElement).find("[name='addressProvince']").val("{!! $stud_profile->stud_addressProvince ? $stud_profile->stud_addressProvince : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='addressCity']").val("{!! $stud_profile->stud_addressCity ? $stud_profile->stud_addressCity : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='isHonorableDismissed']").val("{!! $stud_profile->stud_isHonorableDismissed ? $stud_profile->stud_isHonorableDismissed : '' !!}").trigger(
+                    "change");
+                $(formElement).find("[name='honorableDismissedStatus']").val("{!! $stud_profile->stud_honorableDismissedStatus ? $stud_profile->stud_honorableDismissedStatus : '' !!}").trigger(
+                    "change");
+
+                axios({
+                    method: "POST",
+                    url: "{{ url('/student/profile/retrieve-documents') }}",
+                    data: {
+                        id: "{{ $stud_profile->stud_id_md5 }}"
+                    },
+                    timeout: "{{ $axios_timeout }}"
+                }).then(function(respond) {
+
+                    if (respond.status == 200) {
+
+                        let docu = respond.data.documents;
+                        let docu_ent = docu.entrance;
+                        let docu_rec = docu.records;
+                        let docu_ext = docu.exit;
+
+
+                        if (docu_ent.length >= 1) {
+
+                            if (docu_ent[0].docu_id) {
+
+                                $(formElement).find("[name='documents[entrance][0][docu]']").append(
+                                    '<option value="' + docu_ent[0].docu_id +
+                                    '" selected="selected">' +
+                                    docu_ent[0].docu_name + ' </option>');
+                            }
+
+                            if (docu_ent[0].subm_documentType) {
+                                $(formElement).find("[name='documents[entrance][0][type]']").append(
+                                    '<option value="' + docu_ent[0].subm_documentType +
+                                    '" selected="selected">' + docu_ent[0].subm_documentType +
+                                    ' </option>');
+                            }
+
+                            if (docu_ent[0].subm_dateSubmitted) {
+                                $(formElement).find(
+                                        "[name='documents[entrance][0][date_submitted]']")
+                                    .val(moment(docu_ent[0].subm_dateSubmitted).format('L'));
+                            }
+
+                            initDocumentRow(ent_rowIndex, "entrance");
+
+                            docu_ent.shift();
+                            docu_ent.forEach(d => {
+
+                                ent_rowIndex++;
+                                createDocumentRow(ent_rowIndex, "entrance", d);
+                            });
+                        } else {
+
+                            initDocumentRow(ent_rowIndex, "entrance");
+                        }
+
+                        if (docu_rec.length >= 1) {
+
+                            if (docu_rec[0].docu_id) {
+
+                                $(formElement).find("[name='documents[records][0][docu]']").append(
+                                    '<option value="' + docu_rec[0].docu_id +
+                                    '" selected="selected">' +
+                                    docu_rec[0].docu_name + ' </option>');
+                            }
+
+                            if (docu_rec[0].subm_documentType) {
+                                $(formElement).find("[name='documents[records][0][type]']").append(
+                                    '<option value="' + docu_rec[0].subm_documentType +
+                                    '" selected="selected">' + docu_rec[0].subm_documentType +
+                                    ' </option>');
+                            }
+
+                            if (docu_rec[0].subm_dateSubmitted) {
+                                $(formElement).find(
+                                        "[name='documents[records][0][date_submitted]']")
+                                    .val(moment(docu_rec[0].subm_dateSubmitted).format('L'));
+                            }
+
+                            initDocumentRow(rec_rowIndex, "records");
+
+                            docu_rec.shift();
+                            docu_rec.forEach(d => {
+
+                                rec_rowIndex++;
+                                createDocumentRow(rec_rowIndex, "records", d);
+                            });
+                        } else {
+
+                            initDocumentRow(rec_rowIndex, "records");
+                        }
+
+                        if (docu_ext.length >= 1) {
+
+                            if (docu_ext[0].docu_id) {
+
+                                $(formElement).find("[name='documents[exit][0][docu]']").append(
+                                    '<option value="' + docu_ext[0].docu_id +
+                                    '" selected="selected">' +
+                                    docu_ext[0].docu_name + ' </option>');
+                            }
+
+                            if (docu_ext[0].subm_documentType) {
+                                $(formElement).find("[name='documents[exit][0][type]']").append(
+                                    '<option value="' + docu_ext[0].subm_documentType +
+                                    '" selected="selected">' + docu_ext[0].subm_documentType +
+                                    ' </option>');
+                            }
+
+                            if (docu_ext[0].subm_dateSubmitted) {
+                                $(formElement).find("[name='documents[exit][0][date_submitted]']")
+                                    .val(moment(docu_ext[0].subm_dateSubmitted).format('L'));
+                            }
+
+                            initDocumentRow(ext_rowIndex, "exit");
+
+                            docu_ext.shift();
+                            docu_ext.forEach(d => {
+
+                                ext_rowIndex++;
+                                createDocumentRow(ext_rowIndex, "exit", d);
+                            });
+                        } else {
+
+                            initDocumentRow(ext_rowIndex, "exit");
+                        }
+
+                        let docu_fixed = respond.data.documents_fixed;
+                        let docu_fixed_rec = docu_fixed.records;
+
+                        let docu_fixed_rec_regicard = docu_fixed_rec.regcert;
+                        if (docu_fixed_rec_regicard.length >= 1) {
+
+                            if (docu_fixed_rec_regicard[0].subm_documentType) {
+
+                                $(formElement).find(
+                                        "[name='documents_fix[records][regcert][0][sy]']")
+                                    .append(
+                                        '<option value="' + docu_fixed_rec_regicard[0]
+                                        .subm_documentType +
+                                        '" selected="selected">' +
+                                        docu_fixed_rec_regicard[0].subm_documentType + ' - ' + (
+                                            parseInt(docu_fixed_rec_regicard[0].subm_documentType) +
+                                            1) +
+                                        ' </option>'
+                                    );
+                            }
+
+                            if (docu_fixed_rec_regicard[0].subm_documentType_1) {
+                                $(formElement).find(
+                                        "[name='documents_fix[records][regcert][0][sem]']")
+                                    .append(
+                                        '<option value="' + docu_fixed_rec_regicard[0]
+                                        .subm_documentType_1 +
+                                        '" selected="selected">' + docu_fixed_rec_regicard[0]
+                                        .subm_documentType_1 +
+                                        ' </option>');
+                            }
+
+                            if (docu_fixed_rec_regicard[0].subm_documentType_2) {
+                                $(formElement).find(
+                                        "[name='documents_fix[records][regcert][0][yrlvl]']")
+                                    .append(
+                                        '<option value="' + docu_fixed_rec_regicard[0]
+                                        .subm_documentType_2 +
+                                        '" selected="selected">' + docu_fixed_rec_regicard[0]
+                                        .subm_documentType_2 +
+                                        ' </option>');
+                            }
+
+
+                            if (docu_fixed_rec_regicard[0].subm_dateSubmitted) {
+                                $(formElement).find(
+                                        "[name='documents_fix[records][regcert][0][date_submitted]']"
+                                    )
+                                    .val(moment(docu_fixed_rec_regicard[0].subm_dateSubmitted)
+                                        .format('L'));
+                            }
+
+                            initDocumentFixRow(f_rec_rowIndex, "records", "regcert");
+
+                            docu_fixed_rec_regicard.shift();
+                            docu_fixed_rec_regicard.forEach(d => {
+
+                                f_rec_rowIndex++;
+                                createDocumentFixRow(f_rec_rowIndex, "records", "regcert",
+                                    d);
+                            });
+                        } else {
+
+                            initDocumentFixRow(f_rec_rowIndex, "records", "regcert")
+                        }
+
+
+                    } else {
+
+                        display_modal_error("{{ __('modal.error') }}");
+                    }
+
+                }).catch(function(error) {
+
+                    display_axios_error(error);
+                });
+
+
+
             }));
         </script>
     </x-slot:scripts>

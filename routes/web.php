@@ -100,7 +100,6 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
 
         // User Accounts
         Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
-        Route::put('users/config/{configKey}', 'UsersController@updateConfig')->name('users.updateConfig');
         Route::resource('users', 'UsersController');
 
         // Roles
@@ -122,38 +121,37 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::get('messages/{topic}/reply', 'MessagesController@showReply')->name('messages.showReply');
 
 
+        Route::get('gradesheet/create', 'GradesheetController@create')->name('admin.gradesheet.create');
+        Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
+        Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
+        Route::post('gradesheet/{gradesheet}/form-validate/student', 'GradesheetController@validateStudent')->name('admin.gradesheet.form-validate.student');
+        Route::get('gradesheet/{gradesheet}/pages', 'GradesheetController@getPages')->name('admin.gradesheet.pages');
+        Route::get('gradesheet/{gradesheet}/page-rows', 'GradesheetController@getPageRows')->name('admin.gradesheet.page.rows');
+        Route::post('gradesheet/{gradesheet}/page-details', 'GradesheetController@getPageDetails')->name('admin.gradesheet.pages-details');
 
-        Route::get('gradesheet/create', 'GradesheetsController@create')->name('admin.gradesheet.create');
-        Route::get('gradesheet/{gradesheet}', 'GradesheetsController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
-        Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetsController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
-        Route::post('gradesheet/{gradesheet}/form-validate/student', 'GradesheetsController@validateStudent')->name('admin.gradesheet.form-validate.student');
-        Route::get('gradesheet/{gradesheet}/pages', 'GradesheetsController@getPages')->name('admin.gradesheet.pages');
-        Route::get('gradesheet/{gradesheet}/page-rows', 'GradesheetsController@getPageRows')->name('admin.gradesheet.page.rows');
-        Route::post('gradesheet/{gradesheet}/page-details', 'GradesheetsController@getPageDetails')->name('admin.gradesheet.pages-details');
+        Route::post('gradesheet/store', 'GradesheetController@store');
+        Route::get('gradesheet/{gradesheet}/edit', 'GradesheetController@edit')->name('admin.gradesheet.edit');
+        Route::post('gradesheet/{gradesheet}', 'GradesheetController@save')->name('admin.gradesheet.update');
 
-        Route::post('gradesheet/store', 'GradesheetsController@store');
-        Route::get('gradesheet/{gradesheet}/edit', 'GradesheetsController@edit')->name('admin.gradesheet.edit');
-        Route::post('gradesheet/{gradesheet}', 'GradesheetsController@save')->name('admin.gradesheet.update');
+        Route::post('gradesheet/{gradesheet}/students', 'GradesheetController@storeStudents')->name('admin.gradesheet-students.store');
+        Route::get('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@showStudent')->name('admin.gradesheet-students.show');
+        Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@updateStudent')->name('admin.gradesheet-students.update');
+        Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@destroyStudent')->name('admin.gradesheet-students.destroy');
 
-        Route::post('gradesheet/{gradesheet}/students', 'GradesheetsController@storeStudents')->name('admin.gradesheet-students.store');
-        Route::get('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@showStudent')->name('admin.gradesheet-students.show');
-        Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@updateStudent')->name('admin.gradesheet-students.update');
-        Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@destroyStudent')->name('admin.gradesheet-students.destroy');
+        Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetController@generatePdf')->name('admin.gradesheet.generate.pdf');
+        Route::post('student/profile/add', 'StudentController@ajax_insert');
+        Route::post('student/profile/retrieve', 'StudentController@ajax_retrieve')->name('admin.student.ajaxRetrieve');
+        Route::post('student/profile/edit', 'StudentController@ajax_edit');
 
-        Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetsController@generatePdf')->name('admin.gradesheet.generate.pdf');
-        Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
-        Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve')->name('admin.student.ajaxRetrieve');
-        Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
+        Route::get('ajax/student/profile/retrieve-all', 'StudentController@ajax_retrieve_student_list')->name('admin.student.fetch');
+        Route::get('ajax/student/profile/retrieve-archived', 'StudentController@ajax_retrieve_archived_student_list');
+        Route::post('ajax/student/profile/validate-studentNo', 'StudentController@ajax_validate_studentNo');
 
-        Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list')->name('admin.student.fetch');
-        Route::get('ajax/student/profile/retrieve-archived', 'StudentProfileController@ajax_retrieve_archived_student_list');
-        Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
+        Route::get('student/profile/add', 'StudentController@create_profile')->name('admin.student.create');
+        Route::get('student/profile/{profile_uuid}/edit', 'StudentController@edit_profile')->name('admin.student.edit');
 
-        Route::get('student/profile/add', 'StudentProfileController@create_profile')->name('admin.student.create');
-        Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile')->name('admin.student.edit');
-
-        Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
-        Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
+        Route::post('student/profile/retrieve-documents', 'StudentController@ajax_retrieve_documents');
+        Route::post('student/profile/retrieve-prev-college', 'StudentController@ajax_retrieve_prevCollege');
 
         // Subject
         Route::post('subject/select2', 'SubjectController@ajax_select2_search');

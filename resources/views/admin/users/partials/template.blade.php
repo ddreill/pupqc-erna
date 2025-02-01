@@ -40,7 +40,7 @@
                         </h3>
                     </div>
                     <div class="card-body pt-3">
-                        <form method="POST" action="{{ route('users.updateConfig', $twoFactorKey) }}"
+                        <form method="POST" action=""
                             enctype="multipart/form-data">
 
                             @method('PUT')
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="d-flex align-items-center">
 
-                                    <form method="POST" action="{{ route('users.updateConfig', $emailVerifiedKey) }}"
+                                    <form method="POST" action=""
                                         enctype="multipart/form-data">
 
                                         @method('PUT')

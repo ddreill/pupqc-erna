@@ -212,7 +212,6 @@ return [
         /*
          *  Other service providers...
          */
-        App\Providers\ConfigurationServiceProvider::class,
     ],
 
     /*

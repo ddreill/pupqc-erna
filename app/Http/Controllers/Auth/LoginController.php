@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Rules\ValidDomain;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Validation\ValidationException;
 use App\Notifications\TwoFactorCodeNotification;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -45,7 +42,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => ['required', 'email', 'string', new ValidDomain(strToArray(",", config('settings.allowed_domain')))],
+            $this->username() => ['required', 'email', 'string'],
             'password' => 'required|string',
         ]);
     }

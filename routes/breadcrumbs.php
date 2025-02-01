@@ -52,12 +52,33 @@ Breadcrumbs::for('students.show', function (BreadcrumbTrail $trail, $student) {
     $trail->push(__('global.view') . " " . __('cruds.student.title_singular'), route('students.show', $student));
 });
 
+Breadcrumbs::for('students.edit', function (BreadcrumbTrail $trail, $studentUuid) {
+    $trail->parent('students');
+    $trail->push(__('global.edit') . " " . __('cruds.student.title_singular'), route('students.edit', $studentUuid));
+});
+
 
 
 // List of Gradesheets
 Breadcrumbs::for('gradesheets', function (BreadcrumbTrail $trail) {
     $trail->push(__('global.list_of', ['attribute' => __('cruds.gradesheet.title')]), route('gradesheets.index'));
 });
+
+Breadcrumbs::for('gradesheets.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('gradesheets');
+    $trail->push(__('Create Gradesheet'), route('admin.gradesheet.create'));
+});
+
+Breadcrumbs::for('gradesheets.show', function (BreadcrumbTrail $trail, $gradesheet) {
+    $trail->parent('gradesheets');
+    $trail->push(__('global.view') . " " . __('Gradesheet'), route('admin.gradesheet.show', $gradesheet));
+});
+
+Breadcrumbs::for('gradesheets.edit', function (BreadcrumbTrail $trail, $gradesheet) {
+    $trail->parent('gradesheets');
+    $trail->push(__('global.edit') . " " . __('Gradesheet'), route('admin.gradesheet.edit', $gradesheet));
+});
+
 
 
 

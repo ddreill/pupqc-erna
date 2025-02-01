@@ -109,7 +109,11 @@ class StudentProfile extends Model
     public function gradesheets()
     {
         return $this->belongsToMany(Gradesheet::class, 't_student_enrolled_subjects', 'stud_enrsub_id', 'class_enrsub_id')->withPivot([
-            'enrsub_midtermGrade', 'enrsub_finalGrade', 'enrsub_finalRating', 'enrsub_grade_status', 'enrsub_status',
+            'enrsub_midtermGrade',
+            'enrsub_finalGrade',
+            'enrsub_finalRating',
+            'enrsub_grade_status',
+            'enrsub_status',
         ]);
     }
 
@@ -117,21 +121,24 @@ class StudentProfile extends Model
     {
         $studentGrades = [];
 
-        $studentGradesQuery = $this->with(['gradesheets'
-        , 'gradesheets.subject'
-        , 'gradesheets.instructor'
-        , 'gradesheets.semester'])->whereHas('gradesheets', function ($query) {
+        $studentGradesQuery = $this->with([
+            'gradesheets',
+            'gradesheets.subject',
+            'gradesheets.instructor',
+            'gradesheets.semester'
+        ])->whereHas('gradesheets', function ($query) {
             $query->where('stud_enrsub_id', $this->stud_id);
         })->get()->map(function ($student) {
-            return $student->gradesheets->groupBy('class_acadYear')->map(function ($gradesheets) {
-                return $gradesheets->groupBy(function ($gradesheet) {
-                    return $gradesheet->semester->term_name;
-                })->map(function ($gradesheet) {
-                    return $gradesheet->sortByDesc(function ($gradesheet) {
-                        return $gradesheet->semester->term_order;
+            return $student->gradesheets->sortByDesc('class_acadYear')
+                ->groupBy('class_acadYear')->map(function ($gradesheets) {
+                    return $gradesheets->groupBy(function ($gradesheet) {
+                        return $gradesheet->semester->term_name;
+                    })->map(function ($gradesheet) {
+                        return $gradesheet->sortByDesc(function ($gradesheet) {
+                            return $gradesheet->semester->term_order;
+                        });
                     });
                 });
-            });
         })->first();
 
         if ($studentGradesQuery) {
@@ -179,7 +186,13 @@ class StudentProfile extends Model
     public function documents()
     {
         return $this->belongsToMany(Document::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
-            'subm_documentType', 'subm_documentType_1', 'subm_documentType_2', 'subm_documentType_3', 'subm_documentCategory', 'subm_remarks', 'subm_dateSubmitted'
+            'subm_documentType',
+            'subm_documentType_1',
+            'subm_documentType_2',
+            'subm_documentType_3',
+            'subm_documentCategory',
+            'subm_remarks',
+            'subm_dateSubmitted'
         ]);
     }
 

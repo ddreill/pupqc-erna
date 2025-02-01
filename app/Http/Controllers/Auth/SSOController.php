@@ -60,9 +60,7 @@ class SSOController extends Controller
 
             $user = Socialite::driver($provider)->stateless()->user();
 
-            $validator = Validator::make(["email" => $user->email], [
-                'email' => [new ValidDomain(strToArray(",", config('settings.' . $provider . '.allowed_domain')))],
-            ]);
+            $validator = Validator::make(["email" => $user->email]);
 
             if ($validator->fails()) {
                 return redirect()

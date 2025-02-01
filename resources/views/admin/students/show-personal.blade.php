@@ -14,7 +14,7 @@
                 @can('student_edit')
                     @if (!$student->archived())
                         @include('partials.buttons.edit', [
-                            'editRoute' => url('/student/profile') . '/' . $student->stud_uuid . '/edit',
+                            'editRoute' => route('students.edit', $student->stud_uuid),
                         ])
                     @endif
                 @endcan
